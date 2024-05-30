@@ -1,15 +1,16 @@
 import types
 from aiogram import Bot, Dispatcher, executor, types
 from config import TELEGRAM_TOKEN
-from keyboards.keyboards import get_keyboard_1, get_keyboard_2, get_keyboard_inline_1
-
+from keyboards.keyboards import get_keyboard_1, get_keyboard_2, get_keyboard_inline_1, get_keyboard_inline_2
+import random
+from datetime import datetime
 
 bot = Bot(token = TELEGRAM_TOKEN)
 dp = Dispatcher(bot)
 
 async def set_commands(bot: Bot):
     commands = [
-        types.BotCommand(command= "/start", description="Комманда для запуска бота."),
+        types.BotCommand(command="/start", description="Комманда для запуска бота."),
         types.BotCommand(command="/help", description="Комманда для получения помощи."),
         types.BotCommand(command="/about", description="Комманда для получения информации."),
         types.BotCommand(command="/contacts", description="Комманда для получения контактной информации."),
@@ -37,6 +38,25 @@ async def button_3_click(message: types.Message):
 @dp.message_handler(lambda message: message.text == "Вернуться на прошлую клавиатуру.")
 async def button_4_click(message: types.Message):
     await message.answer("Тут ты можешь попросить бота отправить фото кота.", reply_markup=get_keyboard_1())
+
+@dp.callback_query_handler(lambda c: c.data == "go_2")
+async def go_2(callback_query: types.CallbackQuery):
+    await bot.send_message(callback_query.from_user.id, "Пароды кошек.", reply_markup=get_keyboard_inline_2())
+    await bot.delete_message(chat_id=callback_query.from_user.id, message_id=callback_query.message.message_id)
+
+@dp.callback_query_handler(lambda c: c.data == "send_random")
+async def send_random(callback_query: types.CallbackQuery):
+    random_number = random.randint(1,1000)
+    await callback_query.message.answer(f"Ваше случайное число от 1 до 1000: {random_number}")
+
+@dp.callback_query_handler(lambda c: c.data == "send_datatime")
+async def send_datatime(callback_query: types.CallbackQuery):
+    current_time = datetime.now().strftime("%H:%M:%S")
+    await callback_query.message.answer(f"Время по МСК: {current_time}")
+
+@dp.callback_query_handler(lambda c: c.data == "go_1")
+async def go_2(callback_query: types.CallbackQuery):
+    await callback_query.message.edit_text("Пароды кошек.", reply_markup=get_keyboard_inline_1())
 
 @dp.message_handler(commands="help")
 async def start(message: types.Message):
