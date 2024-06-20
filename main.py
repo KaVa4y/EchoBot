@@ -15,7 +15,7 @@ async def set_commands(bot: Bot):
         types.BotCommand(command="/about", description="Комманда для получения информации."),
         types.BotCommand(command="/contacts", description="Комманда для получения контактной информации."),
         types.BotCommand(command="/black_lives_not_matter", description="Комманда для..."),
-        types.BotCommand(command="/say_gex", description="Комманда для получения gexa.")
+        types.BotCommand(command="/say_gex", description="Комманда для получения gexa."),
     ]
     await bot.set_my_commands(commands)
 
