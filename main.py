@@ -14,7 +14,7 @@ async def set_commands(bot: Bot):
         types.BotCommand(command="/help", description="Комманда для получения помощи."),
         types.BotCommand(command="/about", description="Комманда для получения информации."),
         types.BotCommand(command="/contacts", description="Комманда для получения контактной информации."),
-        types.BotCommand(command="/black_lives_not_matter", description="Комманда для..."),
+        types.BotCommand(command="/dev_info", description="Информация для разработчиков."),
         types.BotCommand(command="/say_gex", description="Комманда для получения gexa."),
     ]
     await bot.set_my_commands(commands)
@@ -70,7 +70,7 @@ async def start(message: types.Message):
 async def start(message: types.Message):
     await message.answer("В разработке.")
 
-@dp.message_handler(commands="black_lives_not_matter")
+@dp.message_handler(commands="dev_info")
 async def start(message: types.Message):
     await message.answer("В разработке.")
 
